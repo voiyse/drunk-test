@@ -1,0 +1,9 @@
+{
+  "name": "drunk-test",
+  "version": "0.1.0",
+  "description": "Take a quick test to determine if you are drunk or not.",
+  "main": "index.js",
+  "dependencies": {
+    "alexa-sdk": "^1.0.7"
+  }
+}

@@ -1,0 +1,20 @@
+{
+   "intents": [
+      {
+         "intent": "TestIntent",
+         "slots": []
+      },
+      {
+         "intent": "StartIntent",
+         "slots": []
+      },
+      {
+         "intent": "AMAZON.HelpIntent",
+         "slots": []
+      },
+     {
+       "intent": "AMAZON.StopIntent",
+       "slots": []
+     }
+   ]
+}
