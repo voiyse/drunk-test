@@ -1,6 +1,8 @@
 module.exports = function() {
   return [
-    question: 'question'
-    answer: 'answer'
+    {
+      question: 'question',
+      answer: 'answer'
+    }
   ];
 };

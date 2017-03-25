@@ -6,7 +6,6 @@ const questions = require('./questions');
 
 // Define states
 var states = {
-  INIT: '_INIT',
   TEST: '_TEST'
 };
 
@@ -16,6 +15,8 @@ const messages = {
   help: 'Drunk Test asks you a list of questions to determine if you are drunk',
   stop: 'Goodbye'
 };
+
+const questionsAsked = 0;
 
 function logHandler(name) {
   console.log('Intent: ' + name);
@@ -38,58 +39,70 @@ const mainHandlers = {
     logHandler(this.name);
 
     this.handler.state = null;
-    this.emit(':tell', 'Goodbye');
+    this.emit(':tell', messages.stop);
   },
 
   'StartIntent': function() {
     logHandler(this.name);
 
     this.handler.state = states.TEST;
-    this.emitWithState('TestIntent');
+
+    this.emitWithState('Question');
   },
 
   'AMAZON.StopIntent': function() {
     logHandler(this.name);
 
     this.handler.state = null;
-    this.emit(':tell', 'Goodbye');
+    this.emit(':tell', messages.stop);
   },
 
   'AMAZON.CancelIntent': function() {
     logHandler(this.name);
 
     this.handler.state = null;
-    this.emit(':tell', 'Goodbye');
+    this.emit(':tell', messages.stop);
   }
 };
 
 const testHandlers = Alexa.CreateStateHandler(states.TEST, {
+  'Question': function() {
+    let message = '';
+    if (0 === questionsAsked) {
+      message += "All right. Let's start your test.";
+    }
+
+    let question = ' How old are you?';
+
+    message += question;
+
+    this.emit(':ask', message, question);
+  },
+
+  'AnswerIntent': function() {
+    this.emit(':tell', 'answer yo');
+  },
+
   'AMAZON.StopIntent': function() {
     logHandler(this.name);
 
     this.handler.state = null;
-    this.emit(':tell', 'Goodbye');
+    this.emit(':tell', messages.stop);
   },
 
   'AMAZON.CancelIntent': function() {
     logHandler(this.name);
 
     this.handler.state = null;
-    this.emit(':tell', 'Goodbye');
+    this.emit(':tell', messages.stop);
   },
 
   'Unhandled': function() {
     logHandler(this.name);
 
     this.handler.state = null;
-    this.emit(':tell', 'Goodbye');
-  },
-
-  'TestIntent': function() {
-    logHandler(this.name);
-
-    this.emit(':tell', "All right. Let's start your test.");
-  },
+    this.emit(':tell', messages.stop);
+  }
 });
 
 exports.handler = function(event, context, callback) {
